@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, wait } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import App from './App';
 import { fetchShow as mockFetchShow } from './api/fetchShow';
 import { act } from 'react-dom/test-utils';
@@ -33,8 +33,9 @@ const mockData = {
 
 test('Does App render', async () => {
         mockFetchShow.mockResolvedValueOnce(mockData);
-        const {getByText} = await render(<App />);
-        getByText(/Select a season/i);
+        const {getByText} = render(<App />);
+        getByText(/Fetching data.../i);
+        waitFor(() => expect(getByText(/Select a season/i)));
 })
 
 
